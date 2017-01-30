@@ -1,0 +1,372 @@
+\documentclass[11pt,letterpaper]{amsart}
+
+\usepackage{ifpdf,ifxetex,ifluatex}
+\ifpdf
+    \typeout{^^J *** PDF mode *** } 
+    \usepackage[protrusion=true,expansion]{microtype}
+    \usepackage[pdftex]{graphicx}
+\else
+    \typeout{^^J *** DVI mode ***} 
+    \usepackage[dvips]{graphicx}
+\fi 
+
+\ifluatex
+    \typeout{ *** LuaLaTeX *** ^^J}
+    \makeatletter
+    \makeatother 
+    % LuaLaTeX specific code
+    \usepackage{unicode-math}
+    \usepackage{lualatex-math}
+\else\ifxetex
+    \typeout{ *** XeLaTeX *** ^^J} 
+    % XeLaTeX specific code
+\else
+    \typeout{ *** LaTeX *** ^^J} 
+\fi\fi 
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{latexsym,amssymb}
+\usepackage{setspace}
+
+\usepackage{fullpage}
+
+%\usepackage[all]{xy}
+%\CompileMatrices
+
+\DeclareMathOperator{\Img}{im}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Aug}{Aug}
+\DeclareMathOperator{\Kern}{Kern}
+\DeclareMathOperator{\Diff}{Diff}
+\DeclareMathOperator{\Symp}{Symp}
+\DeclareMathOperator{\Ham}{Ham}
+\DeclareMathOperator{\MCG}{Map}
+\DeclareMathOperator{\del}{\partial}
+\DeclareMathOperator{\delbar}{\overline{\partial}}
+\DeclareMathOperator*{\fibersum}{\#}
+\DeclareMathOperator*{\union}{\cup}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RP}{\mathbb{R}P}
+\newcommand{\CP}{\mathbb{C}P}
+\newcommand{\CPbar}{\overline{\mathbb{C}P}}
+\newcommand{\D}{D}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\Tw}{{\mathbb{T}w}}
+\newcommand{\into}{\hookrightarrow}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+%\newtheorem{lemma*}{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\usepackage{hyperref}
+\hypersetup{%
+  bookmarks=false,%
+  % pdftoolbar=false,%
+  pdffitwindow=true,%
+  pdftitle={CSC 281},%
+  pdfauthor={Adam C. Knapp},%
+  pdfnewwindow=true,%
+  colorlinks=false,%
+%  citecolor=black,%
+%  filecolor=black,%
+%  linkcolor=black,%
+%  urlcolor=blue,%
+%  pdfhighlight={/I},%
+}
+
+\makeatother
+
+\title[CSC-281]%
+{Rough and Bare-bones Notes for\\CSC-281 Intro to Computer Science II}
+
+\author[A. C. K.]{Adam C. Knapp}
+\address{American University\\ Washington, DC 20016}
+\email{\href{mailto:knapp@american.edu}{knapp@american.edu}}
+
+\usepackage{sourcecodepro}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage{listings}
+
+\begin{document}
+\ifpdf
+\DeclareGraphicsExtensions{.mps,.pdf,.jpg,.png}
+\else
+\DeclareGraphicsExtensions{.mps,.eps,.ps,.jpg,.png}
+\fi
+
+\bibliographystyle{plain}
+
+\maketitle
+
+The real documentation is your friend, go there before Googling.
+\begin{center}
+  \url{https://docs.oracle.com/javase/8/docs/api/}
+\end{center}
+\section{Java basics}
+
+\begin{minted}[fontsize=\small]{Java}
+/*
+ A multi-line comment
+ another line of comment
+ */ 
+public class HelloWorld {
+  public static void main(String[] args) {
+    // a single-line comment
+    System.out.println("Hello World!");
+  }
+}
+\end{minted}
+
+Braces and semicolons, like C.
+
+\begin{itemize}
+\item Must be in \texttt{HelloWorld.java}
+\item Compile with \texttt{javac HelloWorld}
+\item Run with \texttt{java HelloWorld}
+\end{itemize}
+
+\subsection{Primitive Types}
+
+Variable types are explicity declared:
+\begin{itemize}
+\item primitive integer types: 8-bit \texttt{byte}, 16-bit
+  \texttt{short}, 32-bit \texttt{int}, 64-bit \texttt{long}. All types
+  are {\em signed}.
+\item primitive character type: \texttt{char} (really same as
+  \texttt{int}) character literals look like: \texttt{'w'}
+\item primitive floating point types: 32-bit \texttt{float}, 64-bit
+  \texttt{double}
+\item \texttt{boolean} literals: \texttt{true} and \texttt{false}
+\item Strings, string literals look like \texttt{"CSC281"}
+\end{itemize}
+
+\subsection{Increment/Decrement}
+
+\begin{itemize}
+\item \texttt{a++} increments \texttt{a} by 1 and evaluates to \emph{previous value}
+\item \texttt{++a} increments \texttt{a} by 1 and evaluates to \emph{new value}
+\item \texttt{a-{}-} decrements \texttt{a} by 1 and evaluates to \emph{previous value}
+\item \texttt{-{}-a} decrements \texttt{a} by 1 and evaluates to \emph{new value}
+\end{itemize}
+
+The difference between pre- and post-increment can be confusing in
+compound statements. Avoid if there is no tangible benefit.
+
+\subsubsection{Pitfalls}
+
+floating point isn't precise
+\begin{minted}[fontsize=\small]{Java}
+  for(double d = 1.1; d != 2; d += 0.1)
+  { System.out.println(d); }
+\end{minted}
+
+integers overflow silently 
+\begin{minted}[fontsize=\small]{Java}
+  for(int i = 1; i < Integer.MAX_VALUE; i *= 2)
+  { System.out.println(i); }
+\end{minted}
+
+\subsection{Reference Types}
+
+Reference types point at locations in memory. The default value of a
+reference type is \texttt{null}. All arrays and objects are reference
+types. Example of a built in object: \texttt{String}
+
+Arrays are 0-indexed and declared in the style:
+\begin{minted}[fontsize=\small]{Java}
+  int[] tenNumbers = new int[10];
+\end{minted}
+Arrays have elements, referenced using square braces. Ex:
+\texttt{tenNumbers} contains \texttt{tenNumbers[0]} through
+\texttt{tenNumbers[9]}.
+
+
+Objects have fields (data) and methods (code) and are {\em non-static
+  instances} of classes.
+
+Some useful methods of \texttt{String}'s:
+\begin{itemize}
+\item \texttt{int length()} Ex: \texttt{"abc".length()} evaluates to 3.
+\item \texttt{char charAt(int)} Ex: \texttt{"abc".charAt(1)} evaluates
+  to \texttt{'b'}
+\item \texttt{String substring(int,int)} Ex:
+  \texttt{"abc".substring(0,2)} evaluates to \texttt{"ab"}
+\item \texttt{String substring(int)} Ex:
+  \texttt{"abc".substring(1)} evaluates to \texttt{"bc"}
+\end{itemize}
+See
+\url{https://docs.oracle.com/javase/8/docs/api/java/lang/String.html}
+
+\subsubsection{Passing reference types}
+
+\begin{minted}[fontsize=\small]{Java}
+  void messWithReference(int[] arr) { arr[0] = 1; }
+  void dontMessWithValue(int n) { n = 1; }
+\end{minted}
+
+The first actually modifies the array passed to it. The second only
+changes the value passed to it inside the method, the caller does not
+see a change.
+
+\subsection{Booleans and Branching}
+
+boolean valued comparison statements for numeric types \texttt{a>=b},
+\texttt{a>b}, \texttt{a<=b}, \texttt{a<b}
+
+comparison for types: \texttt{a==b} (not \texttt{=}) and \texttt{a!=b}
+
+\emph{Note}: for reference types, these compare equality of reference,
+{\em not} equality of the contents! For arrays you should instead use
+\texttt{Arrays.equals()} or \texttt{Arrays.deepEquals()}. For other
+reference types (ex: \texttt{String}'s) use the \texttt{equals()}
+method. If you define your own classes, be sure to \emph{implement} an
+\texttt{equals()} method.
+
+for boolean types: OR: \texttt{a|b}, short-circuit OR: \texttt{a||b},
+AND: \texttt{a\&b}, short-circuit AND: \texttt{a\&\&b}, NOT:
+\texttt{!a}
+
+\subsubsection{If statement}
+\begin{minted}[fontsize=\small]{Java}
+if( test1 ) {
+// do something
+} else if( test2 ) {
+// do something else
+} else {
+// do yet another, different, thing
+}
+\end{minted}
+The \texttt{else if} and \texttt{else} blocks are optional. Single
+line blocks are OK, but may violate some coding styles.
+
+
+Note: Suppose that \texttt{thingIsTrue()} is a boolean-valued method,
+testing something you are interested in. A lot of beginners want to
+write
+\begin{minted}[fontsize=\small]{Java}
+if(thingIsTrue()==true) ...
+\end{minted}
+This is a bit silly in that you are getting a true/false value and
+comparing it to \texttt{true}. Is true true? yes. If false true?
+no. You already have your answer. Instead write
+\begin{minted}[fontsize=\small]{Java}
+if(thingIsTrue()) ...
+\end{minted}
+
+\subsubsection{ternary operator} 
+
+\begin{minted}[fontsize=\small]{Java}
+booleanExpression ?  valueIfTrue : valueIfFalse
+\end{minted}
+
+\subsubsection{switch statement}
+\begin{minted}[fontsize=\small]{Java}
+switch(n % 2) {
+case 0:
+  System.out.println("n is even");
+  break;
+case -1:
+  System.out.print("n is negative and ");
+case 1:
+  System.out.println("n is odd");
+  break;
+default:
+  // unreachable in this case
+}
+\end{minted}
+Jumps to case statement. Note \texttt{break} statements. Execution
+cascades through if you don't have them. Question: What if $n=5$, what
+if $n=-7$? 
+
+Historical tidbit: \href{https://en.wikipedia.org/wiki/Duff's_device}{Duff's device}
+
+\subsection{Loops}
+
+\begin{itemize}
+\item for loop
+  \begin{minted}[fontsize=\small]{Java}
+    for(initializer; condition; updateStep) {
+      // code block
+    }
+  \end{minted}
+  typical:
+  \begin{minted}[fontsize=\small]{Java}
+    for(int i = 0; i < n; i++) {
+      // code block
+    }
+  \end{minted}
+\item for-each variation
+  \begin{minted}[fontsize=\small]{Java}
+    for(Type item : arrayOrIterableContainingType) {
+      // code block
+    }
+  \end{minted}
+\item while loop
+  \begin{minted}[fontsize=\small]{Java}
+    while( booleanValuedStatement ) {
+      // code block
+    }
+  \end{minted}
+\item do-while loop
+  \begin{minted}[fontsize=\small]{Java}
+    do {
+      // code block
+    } while( booleanValuedStatement );
+  \end{minted}
+  note semicolon at end. When you want the block to execute at least
+  once. Useful for user input
+  
+  In any of these loops, you can skip to the next iteration using the
+  keyword \texttt{continue}. You can break out of the loop entirely
+  using \texttt{break}. Both support breaking out of nested loops /
+  continuing an outer loop using labels. e.g.
+\begin{minted}[fontsize=\small]{Java}
+outerLoop:
+while( thing1 ) {
+  while( thing2 ) {
+    // do something
+    if( thing3 ) { break outerLoop; }
+  }
+}
+\end{minted}
+  here, the break statement jumps out of both while loops. Try to code
+  so that this isn't necessary.
+  
+\end{itemize}
+
+\section{Fisher-Yates / Knuth Shuffle}
+
+\begin{minted}[fontsize=\small]{Java}
+  void shuffle(int[] a) {
+    int n = a.length;
+    for(int i = 0; i < n - 1; i++) {
+      // generate j with i <= j < n
+      int j = i + (int)( Math.random()*(n-i) );
+      // swap a[i] and a[j]
+      int temp = a[i];
+      a[i] = a[j];
+      a[j] = temp;
+    }
+  }
+\end{minted}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% LaTeX-command: "latex -shell-escape"
+%%% End: 
