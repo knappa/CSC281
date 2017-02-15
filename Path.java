@@ -26,10 +26,7 @@ public class Path implements Comparable<Path> {
   public double length() {
     return 0.0; // TODO: implement
   }
-
-  // fulfill the Comparable<Path> interface
-  // our comparison should have the property: shortPath < longPath
-
+  
   /**
    * Compares the lengths of {@code this} and {@code other}
    *
