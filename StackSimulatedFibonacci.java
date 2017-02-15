@@ -131,41 +131,41 @@ public class StackSimulatedFibonacci {
 
     static State exitState() {
       return new State(
-        0,
-        Position.EXIT,
-        0,
-        false,
-        0,
-        false);
+          0,
+          Position.EXIT,
+          0,
+          false,
+          0,
+          false);
     }
 
     static State call(int parameter) {
       return new State(
-        parameter,
-        Position.ENTRY,
-        0,
-        false,
-        0,
-        false);
+          parameter,
+          Position.ENTRY,
+          0,
+          false,
+          0,
+          false);
     }
 
     State nextPosition() {
       if (this.position == Position.ENTRY) {
         return new State(
-          this.parameter,
-          Position.RETURN_FROM_FIRST_RECURSION,
-          this.firstValue,
-          this.firstValueSet,
-          this.secondValue,
-          this.secondValueSet);
+            this.parameter,
+            Position.RETURN_FROM_FIRST_RECURSION,
+            this.firstValue,
+            this.firstValueSet,
+            this.secondValue,
+            this.secondValueSet);
       } else if (this.position == Position.RETURN_FROM_FIRST_RECURSION) {
         return new State(
-          this.parameter,
-          Position.RETURN_FROM_SECOND_RECURSION,
-          this.firstValue,
-          this.firstValueSet,
-          this.secondValue,
-          this.secondValueSet);
+            this.parameter,
+            Position.RETURN_FROM_SECOND_RECURSION,
+            this.firstValue,
+            this.firstValueSet,
+            this.secondValue,
+            this.secondValueSet);
       } else {
         System.err.println("not supposed to be called");
         return null;
@@ -177,11 +177,11 @@ public class StackSimulatedFibonacci {
       if (!(o instanceof State)) return false;
       State other = (State) o;
       return this.parameter == other.parameter
-        && this.position == other.position
-        && this.firstValue == other.firstValue
-        && this.firstValueSet == other.firstValueSet
-        && this.secondValue == other.secondValue
-        && this.secondValueSet == other.secondValueSet;
+          && this.position == other.position
+          && this.firstValue == other.firstValue
+          && this.firstValueSet == other.firstValueSet
+          && this.secondValue == other.secondValue
+          && this.secondValueSet == other.secondValueSet;
     }
 
     @Override
@@ -191,18 +191,18 @@ public class StackSimulatedFibonacci {
       } else {
         StringBuilder sb = new StringBuilder();
         sb.append("(n=")
-          .append(parameter)
-          .append(",pos=")
-          .append(position);
+            .append(parameter)
+            .append(",pos=")
+            .append(position);
 
         if (this.firstValueSet) {
           sb.append(",fv=")
-            .append(firstValue);
+              .append(firstValue);
         }
 
         if (this.secondValueSet) {
           sb.append(",sv=")
-            .append(secondValue);
+              .append(secondValue);
         }
 
         sb.append(")");

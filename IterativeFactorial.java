@@ -9,20 +9,6 @@ import java.math.BigInteger;
 public class IterativeFactorial {
 
   /**
-   * The classic iterative factorial function defined by 0!=1 and n! = n*(n-1)!
-   *
-   * @param n a non-negative integer value
-   * @return value of n!
-   */
-  public static BigInteger compute(int n) {
-    BigInteger value = BigInteger.ONE;
-    for (int i = 1; i <= n; i++) {
-      value = value.multiply(BigInteger.valueOf(i));
-    }
-    return value;
-  }
-
-  /**
    * @param args command line arguments
    */
   public static void main(String[] args) {
@@ -38,6 +24,20 @@ public class IterativeFactorial {
 
     }
 
+  }
+
+  /**
+   * The classic iterative factorial function defined by 0!=1 and n! = n*(n-1)!
+   *
+   * @param n a non-negative integer value
+   * @return value of n!
+   */
+  public static BigInteger compute(int n) {
+    BigInteger value = BigInteger.ONE;
+    for (int i = 1; i <= n; i++) {
+      value = value.multiply(BigInteger.valueOf(i));
+    }
+    return value;
   }
 
 }

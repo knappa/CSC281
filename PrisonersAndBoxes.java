@@ -6,6 +6,34 @@
  */
 public class PrisonersAndBoxes {
 
+  public static void main(String[] args) {
+    try {
+      int numTrials = Integer.parseInt(args[0]);
+
+      int sucesses = 0;
+      for (int i = 0; i < numTrials; i++) {
+        if (runTrial()) { sucesses++; }
+      }
+      System.out.println((100.0 * sucesses / (double) numTrials) + "% survival rate");
+    } catch (Exception e) {
+      System.err.println("expecting an integer number of trials as parameter");
+    }
+  }
+
+  /**
+   * Run a trial of the prisoner's box strategy
+   *
+   * @return {@code true} if the prisoners live, {@code false} if they die
+   */
+  public static boolean runTrial() {
+    int[] boxes = setupBoxes();
+
+    // now run the algorithm
+
+    // TODO: run the algorithm
+
+  }
+
   /**
    * Creates a randomized set of boxes
    *
@@ -33,34 +61,6 @@ public class PrisonersAndBoxes {
     }
 
     return boxes;
-  }
-
-  /**
-   * Run a trial of the prisoner's box strategy
-   *
-   * @return {@code true} if the prisoners live, {@code false} if they die
-   */
-  public static boolean runTrial() {
-    int[] boxes = setupBoxes();
-
-    // now run the algorithm
-
-    // TODO: run the algorithm
-
-  }
-
-  public static void main(String[] args) {
-    try {
-      int numTrials = Integer.parseInt(args[0]);
-
-      int sucesses = 0;
-      for (int i = 0; i < numTrials; i++) {
-        if (runTrial()) { sucesses++; }
-      }
-      System.out.println((100.0 * sucesses / (double) numTrials) + "% survival rate");
-    } catch (Exception e) {
-      System.err.println("expecting an integer number of trials as parameter");
-    }
   }
 
 }

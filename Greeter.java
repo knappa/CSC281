@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Greeter {
 
@@ -10,7 +10,7 @@ public class Greeter {
 
     String name = scanner.nextLine();
 
-    System.out.println("Hello "+name+"!");
+    System.out.println("Hello " + name + "!");
 
   }
 

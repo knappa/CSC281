@@ -27,24 +27,24 @@ public class RecursiveFunctionsViaLambdas {
     // n!
 
     BiFunction<BiFunction, Integer, Integer> factorialRecursiveDefinition
-      = (f, k) -> (k == 0) ? 1 : k * (int) f.apply(f, k - 1);
+        = (f, k) -> (k == 0) ? 1 : k * (int) f.apply(f, k - 1);
 
     Function<Integer, Integer> factorial
-      = k -> factorialRecursiveDefinition.apply(factorialRecursiveDefinition, k);
+        = k -> factorialRecursiveDefinition.apply(factorialRecursiveDefinition, k);
 
     System.out.println(factorial.apply(n));
 
     // fib(n)
 
     BiFunction<BiFunction, Integer, Integer> fibonacciRecursiveDefinition
-      = (f, k) -> {
+        = (f, k) -> {
       if (k == 0) { return 0; }
       if (k == 1) { return 1; }
       return (int) f.apply(f, k - 1) + (int) f.apply(f, k - 2);
     };
 
     Function<Integer, Integer> fibonacci
-      = k -> fibonacciRecursiveDefinition.apply(fibonacciRecursiveDefinition, k);
+        = k -> fibonacciRecursiveDefinition.apply(fibonacciRecursiveDefinition, k);
 
     System.out.println(fibonacci.apply(n));
 
