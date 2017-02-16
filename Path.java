@@ -26,13 +26,13 @@ public class Path implements Comparable<Path> {
   public double length() {
     return 0.0; // TODO: implement
   }
-  
+
   /**
    * Compares the lengths of {@code this} and {@code other}
    *
    * @param other another path
-   * @return -1 if the length of {@code this} if less than the length of {@code other}, 0 if the lengths agree, or -1
-   * if the length of {@code this} is larger.
+   * @return -1 if the length of {@code this} if less than the length of {@code other}, 0 if the lengths agree, or -1 if
+   * the length of {@code this} is larger.
    */
   @Override
   public int compareTo(Path other) {
@@ -45,7 +45,35 @@ public class Path implements Comparable<Path> {
    * @return a path, different from {@code this} by a single swap of two randomly chosen locations
    */
   public Path getMutant() {
-    return null; // TODO: implemenet
+    return null; // TODO: implement
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj != null
+      && obj instanceof Path
+      && this.equals((Path) obj);
+  }
+
+  /**
+   * Compares paths for equality
+   *
+   * @param other another path
+   * @return {@code true} if {@code this} represents the same path as {@code other}, {@code false} otherwise
+   */
+  public boolean equals(Path other) {
+    // Easy case: if instances are literally the same, they must be equal
+    if (this == other) { return true; }
+
+    // TODO: implement actual test when the instances are different
+    return false;
+  }
+
+  /**
+   * Draw path to StdDraw
+   */
+  public void draw() {
+    // TODO: (optional) implement drawing to StdDraw
   }
 
 }
