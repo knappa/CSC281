@@ -1,6 +1,6 @@
 /**
- * An immutable class which encapsulates a circular path of {@code Location}s. Two paths are considered to be
- * equivalent if they are the same up to rotations and reversals.
+ * An immutable class which encapsulates a circular path of {@code Location}s. Two paths are
+ * considered to be equivalent if they are the same up to rotations and reversals.
  * <p>
  * Created on 2/15/17
  *
@@ -31,8 +31,8 @@ public class Path implements Comparable<Path> {
    * Compares the lengths of {@code this} and {@code other}
    *
    * @param other another path
-   * @return -1 if the length of {@code this} if less than the length of {@code other}, 0 if the lengths agree, or -1 if
-   * the length of {@code this} is larger.
+   * @return -1 if the length of {@code this} if less than the length of {@code other}, 0 if the
+   * lengths agree, or -1 if the length of {@code this} is larger.
    */
   @Override
   public int compareTo(Path other) {
@@ -59,7 +59,8 @@ public class Path implements Comparable<Path> {
    * Compares paths for equality
    *
    * @param other another path
-   * @return {@code true} if {@code this} represents the same path as {@code other}, {@code false} otherwise
+   * @return {@code true} if {@code this} represents the same path as {@code other}, {@code false}
+   * otherwise
    */
   public boolean equals(Path other) {
     // Easy case: if instances are literally the same, they must be equal

@@ -19,8 +19,6 @@ public class Location {
     // TODO: implement me
   }
 
-  // compute the distance between the locations "this" and "other"
-
   /**
    * Computes the distance between two {@code Location}s using the Haversine formula.
    *
