@@ -2,12 +2,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Insertion sort demonstration
+ * Bubble sort demonstration
  *
  * @author <a href="mailto:knapp@american.edu">Adam Knapp</a>
  * @version 0.1
  */
-public class Insertion {
+public class Bubble {
 
   /**
    * Reads from stdin
@@ -40,13 +40,19 @@ public class Insertion {
    */
   public static void sort(int[] array) {
 
-    for (int i = 1; i < array.length; i++) {
-      // let the next item "sink" down to it's appropriate level.
-      for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {
-        int temp = array[j - 1];
-        array[j - 1] = array[j];
-        array[j] = temp;
+    for (int i = array.length - 1; i > 0; i--) {
+      boolean madeSwap = false;
+      for (int j = 0; j < i; j++) {
+        if (array[j] > array[j + 1]) {
+          // swap that element with the one at index i
+          int temp = array[j];
+          array[j] = array[j + 1];
+          array[j + 1] = temp;
+          madeSwap = true;
+        }
       }
+      // if we had a pass without any swap, the array must be sorted.
+      if (!madeSwap) { return; }
     }
   }
 

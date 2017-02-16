@@ -19,6 +19,7 @@ public class Merge {
   public static void sort(int[] array) {
     aux = new int[array.length];
     sort(array, 0, array.length - 1);
+    aux = null; // dereference so the gc can clean up our mess
   }
 
   private static void sort(int[] array, int low, int high) {
@@ -35,8 +36,10 @@ public class Merge {
   private static void merge(int[] array, int low, int mid, int high) {
     int i = low, j = mid + 1;
 
-    for (int k = low; k <= high; k++)
-      aux[k] = array[k];
+    System.arraycopy(array, low, aux, low, high + 1 - low);
+    // arraycopy is equivalent to the below, but faster:
+    // for (int k = low; k <= high; k++)
+    //   aux[k] = array[k];
 
     for (int k = low; k <= high; k++) {
       if (i > mid) array[k] = aux[j++];
