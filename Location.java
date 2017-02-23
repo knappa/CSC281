@@ -29,4 +29,38 @@ public class Location {
     return 0; // TODO: implement me
   }
 
+  /**
+   * Getter for the Location's label
+   *
+   * @return the label
+   */
+  public String getLabel() {
+    return null; // TODO: implement me
+  }
+
+  /**
+   * Getter for the location's latitude
+   *
+   * @return the location's latitude in degrees.
+   */
+  public double getLatitudeDeg() {
+    return 0.0; // TODO: implement me
+  }
+
+  /**
+   * Getter for the location's longitude
+   *
+   * @return the location's longitude in degrees
+   */
+  public double getLongitudeDeg() {
+    return 0.0; // TODO: implement me
+  }
+
+  /**
+   * Draw location with label to StdDraw
+   */
+  public void draw() {
+    // TODO: (optional) implement drawing to StdDraw
+  }
+
 }
