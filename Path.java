@@ -32,7 +32,7 @@ public class Path implements Comparable<Path> {
    *
    * @param other another path
    * @return -1 if the length of {@code this} if less than the length of {@code other}, 0 if the
-   * lengths agree, or -1 if the length of {@code this} is larger.
+   * lengths agree, or 1 if the length of {@code this} is larger.
    */
   @Override
   public int compareTo(Path other) {
