@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * @author <a href="mailto:adam.knapp@instanton.org">Adam Knapp</a>
  * @version 1.0
  */
+@SuppressWarnings("WeakerAccess")
 public class Turtle {
 
   private static final double turtleSize = 5.0;
@@ -59,6 +60,18 @@ public class Turtle {
     render();
   }
 
+  private static void setBounds() {
+    if (preserveAspectRatio) {
+      double max = Math.max(maxX + turtleSize, maxY + turtleSize);
+      double min = Math.min(minX - turtleSize, minY - turtleSize);
+      StdDraw.setXscale(min, max);
+      StdDraw.setYscale(min, max);
+    } else {
+      StdDraw.setXscale(minX - turtleSize, maxX + turtleSize);
+      StdDraw.setYscale(minY - turtleSize, maxY + turtleSize);
+    }
+  }
+
   /**
    * re-render the scene
    */
@@ -70,43 +83,6 @@ public class Turtle {
     for (Turtle t : turtles) t.draw();
     for (Line l : lines) l.draw();
     StdDraw.show();
-  }
-
-  /**
-   * draw the turtle
-   */
-  private void draw() {
-
-    if (!visible) return;
-
-    StdDraw.setPenColor(color);
-
-    StdDraw.line(x + turtleSize * Math.cos(heading),
-                 y + turtleSize * Math.sin(heading),
-                 x + turtleSize * Math.cos(heading + 2 * Math.PI / 3) / 2.0,
-                 y + turtleSize * Math.sin(heading + 2 * Math.PI / 3) / 2.0);
-
-    StdDraw.line(x + turtleSize * Math.cos(heading + 2 * Math.PI / 3) / 2.0,
-                 y + turtleSize * Math.sin(heading + 2 * Math.PI / 3) / 2.0,
-                 x + turtleSize * Math.cos(heading + 4 * Math.PI / 3) / 2.0,
-                 y + turtleSize * Math.sin(heading + 4 * Math.PI / 3) / 2.0);
-
-    StdDraw.line(x + turtleSize * Math.cos(heading + 4 * Math.PI / 3) / 2.0,
-                 y + turtleSize * Math.sin(heading + 4 * Math.PI / 3) / 2.0,
-                 x + turtleSize * Math.cos(heading),
-                 y + turtleSize * Math.sin(heading));
-  }
-
-  private static void setBounds() {
-    if (preserveAspectRatio) {
-      double max = Math.max(maxX + turtleSize, maxY + turtleSize);
-      double min = Math.min(minX - turtleSize, minY - turtleSize);
-      StdDraw.setXscale(min, max);
-      StdDraw.setYscale(min, max);
-    } else {
-      StdDraw.setXscale(minX - turtleSize, maxX + turtleSize);
-      StdDraw.setYscale(minY - turtleSize, maxY + turtleSize);
-    }
   }
 
   /**
@@ -252,6 +228,31 @@ public class Turtle {
     } else if (dx > 0) heading = Math.atan(dy / dx);
     else heading = Math.PI + Math.atan(dy / dx); // dx < 0
 
+  }
+
+  /**
+   * draw the turtle
+   */
+  private void draw() {
+
+    if (!visible) return;
+
+    StdDraw.setPenColor(color);
+
+    StdDraw.line(x + turtleSize * Math.cos(heading),
+      y + turtleSize * Math.sin(heading),
+      x + turtleSize * Math.cos(heading + 2 * Math.PI / 3) / 2.0,
+      y + turtleSize * Math.sin(heading + 2 * Math.PI / 3) / 2.0);
+
+    StdDraw.line(x + turtleSize * Math.cos(heading + 2 * Math.PI / 3) / 2.0,
+      y + turtleSize * Math.sin(heading + 2 * Math.PI / 3) / 2.0,
+      x + turtleSize * Math.cos(heading + 4 * Math.PI / 3) / 2.0,
+      y + turtleSize * Math.sin(heading + 4 * Math.PI / 3) / 2.0);
+
+    StdDraw.line(x + turtleSize * Math.cos(heading + 4 * Math.PI / 3) / 2.0,
+      y + turtleSize * Math.sin(heading + 4 * Math.PI / 3) / 2.0,
+      x + turtleSize * Math.cos(heading),
+      y + turtleSize * Math.sin(heading));
   }
 
   /**
