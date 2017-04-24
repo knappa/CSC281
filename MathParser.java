@@ -107,14 +107,14 @@ public class MathParser {
       // have a '-' but no '+', so parse as a difference
       Optional<MathExpression> parseAttempt = MathParser.parseDifference(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
-    } else if (sumIndex > 0 && sumIndex < diffIndex) {
+    } else if (sumIndex >= 0 && sumIndex < diffIndex) {
       // left to right, so try as a sum first
       Optional<MathExpression> parseAttempt = MathParser.parseSum(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
       // if that fails, then try difference
       parseAttempt = MathParser.parseDifference(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
-    } else if (diffIndex > 0 && diffIndex < sumIndex) {
+    } else if (diffIndex >= 0 && diffIndex < sumIndex) {
       // left to right, so try as a difference first
       Optional<MathExpression> parseAttempt = MathParser.parseDifference(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
@@ -127,13 +127,13 @@ public class MathParser {
     // TODO
 
     // attempt to parse as exponentiation
-    sumIndex = expression.indexOf('^');
-    if (sumIndex != -1) {
+    int expIndex = expression.indexOf('^');
+    if (expIndex != -1) {
       Optional<MathExpression> base =
-        MathParser.parse(expression.substring(0, sumIndex));
+        MathParser.parse(expression.substring(0, expIndex));
       if (base.isPresent()) {
         Optional<MathExpression> exponent =
-          MathParser.parse(expression.substring(sumIndex + 1));
+          MathParser.parse(expression.substring(expIndex + 1));
         if (exponent.isPresent()) {
           return Optional.of(new Exponential(base.get(), exponent.get()));
         }
@@ -141,7 +141,8 @@ public class MathParser {
     }
 
     // attempt to parse parentheses
-    if (expression.charAt(0) == '(' && expression.charAt(expression.length() - 1) == ')') {
+    if (expression.charAt(0) == '('
+          && expression.charAt(expression.length() - 1) == ')') {
       Optional<MathExpression> subExpression =
         MathParser.parse(expression.substring(1, expression.length() - 1));
       if (subExpression.isPresent()) { return subExpression; }
@@ -177,6 +178,10 @@ public class MathParser {
   }
 
   private static class Division implements MathExpression {
+    // TODO
+  }
+
+  private static class Subtraction implements MathExpression {
     // TODO
   }
 
