@@ -108,18 +108,18 @@ public class MathParser {
       Optional<MathExpression> parseAttempt = MathParser.parseDifference(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
     } else if (sumIndex >= 0 && sumIndex < diffIndex) {
-      // left to right, so try as a sum first
-      Optional<MathExpression> parseAttempt = MathParser.parseSum(expression);
-      if (parseAttempt.isPresent()) { return parseAttempt; }
-      // if that fails, then try difference
-      parseAttempt = MathParser.parseDifference(expression);
-      if (parseAttempt.isPresent()) { return parseAttempt; }
-    } else if (diffIndex >= 0 && diffIndex < sumIndex) {
-      // left to right, so try as a difference first
+      // order of operations is left to right, so we the *leftmost* operator first: difference
       Optional<MathExpression> parseAttempt = MathParser.parseDifference(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
-      // if that fails, then try sum
+      // if that fails, then try difference
       parseAttempt = MathParser.parseSum(expression);
+      if (parseAttempt.isPresent()) { return parseAttempt; }
+    } else if (diffIndex >= 0 && diffIndex < sumIndex) {
+      // order of operations is left to right, so we the *leftmost* operator first: sum
+      Optional<MathExpression> parseAttempt = MathParser.parseSum(expression);
+      if (parseAttempt.isPresent()) { return parseAttempt; }
+      // if that fails, then try sum
+      parseAttempt = MathParser.parseDifference(expression);
       if (parseAttempt.isPresent()) { return parseAttempt; }
     }
 
@@ -173,17 +173,17 @@ public class MathParser {
       .ifPresent(me -> System.out.println(me.getValue()));
   }
 
-  private static class Multiplication implements MathExpression {
-    // TODO
-  }
-
-  private static class Division implements MathExpression {
-    // TODO
-  }
-
-  private static class Subtraction implements MathExpression {
-    // TODO
-  }
+//  private static class Multiplication implements MathExpression {
+//    // TODO
+//  }
+//
+//  private static class Division implements MathExpression {
+//    // TODO
+//  }
+//
+//  private static class Subtraction implements MathExpression {
+//    // TODO
+//  }
 
   /**
    * A class to encode an expression with an exponential as its top-most operation
