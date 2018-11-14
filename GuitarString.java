@@ -1,21 +1,21 @@
 /**
- * Created by knappa on 10/16/16.
+ * Created by knappa on 10/16/16. 
+ * Modified 11/14/18: added example flat
  *
  * @author <a href="mailto:knapp@american.edu">Adam Knapp</a>
- * @version 0.1
+ * @version 0.2
  */
 public class GuitarString {
 
   private static final double A_4 = 440.0; // hz
+  private static double sample;
   private final int capacity;
-  private int tics;
   private RingBuffer rb;
 
   // create a guitar string of the given frequency, using a sampling rate of 44,100
   public GuitarString(double frequency) {
     capacity = (int) Math.round(0.5 + (44100 / frequency));
     rb = new RingBuffer(capacity);
-    tics = 0;
   }
 
   // create a guitar string whose size and initial values are given by the array
@@ -23,14 +23,18 @@ public class GuitarString {
     capacity = init.length;
     rb = new RingBuffer(capacity);
     for (double v : init) rb.enqueue(v);
-    tics = 0;
   }
 
   public static void main(String[] args) {
 
     // create guitar strings
+    
     double A_3 = A_4 * Math.pow(1.059463, -12.0);
     GuitarString stringA3 = new GuitarString(A_3);
+
+    double Bb_3 = A_4 * Math.pow(1.059463, -11.0);   // sharps/flats are half-way in between naturals
+    GuitarString stringBb3 = new GuitarString(Bb_3); // i.e. B-flat (Bb) is the same as A-sharp A#
+						     // and is in between A and B
 
     double B_3 = A_4 * Math.pow(1.059463, -10.0);
     GuitarString stringB3 = new GuitarString(B_3);
@@ -63,60 +67,65 @@ public class GuitarString {
       if (StdDraw.hasNextKeyTyped()) {
         char key = StdDraw.nextKeyTyped();
         switch (key) {
-          case 'a':
-            stringA3.pluck();
-            break;
-          case 'b':
-            stringB3.pluck();
-            break;
-          case 'c':
-            stringC3.pluck();
-            break;
-          case 'd':
-            stringD3.pluck();
-            break;
-          case 'e':
-            stringE3.pluck();
-            break;
-          case 'f':
-            stringF3.pluck();
-            break;
-          case 'g':
-            stringG3.pluck();
-            break;
-          case 'A':
-            stringA4.pluck();
-            break;
-          case 'B':
-            stringB4.pluck();
-            break;
-          case 'C':
-            stringC4.pluck();
-            break;
-          default:
-            // no-op
+	case 'q': // regular notes on the qwerty row
+	  stringA3.pluck();
+	  break;
+	case '2': // sharps/flats on the number row
+	  stringBb3.pluck();
+	  break;
+	case 'w':
+	  stringB3.pluck();
+	  break;
+	case 'e':
+	  stringC3.pluck();
+	  break;
+	case 'r':
+	  stringD3.pluck();
+	  break;
+	case 't':
+	  stringE3.pluck();
+	  break;
+	case 'y':
+	  stringF3.pluck();
+	  break;
+	case 'u':
+	  stringG3.pluck();
+	  break;
+	case 'i':
+	  stringA4.pluck();
+	  break;
+	case 'o':
+	  stringB4.pluck();
+	  break;
+	case 'p':
+	  stringC4.pluck();
+	  break;
+	default:
+	  // no-op
         }
         //if(noteIndex != -1) strings[noteIndex].pluck();
       }
 
       // compute the superposition of samples
-      double sample =
+      sample =
         stringA3.sample()
-          + stringB3.sample()
-          + stringC3.sample()
-          + stringD3.sample()
-          + stringE3.sample()
-          + stringF3.sample()
-          + stringG3.sample()
-          + stringA4.sample()
-          + stringB4.sample()
-          + stringC4.sample();
+	+ stringBb3.sample()
+	+ stringB3.sample()
+	+ stringC3.sample()
+	+ stringD3.sample()
+	+ stringE3.sample()
+	+ stringF3.sample()
+	+ stringG3.sample()
+	+ stringA4.sample()
+	+ stringB4.sample()
+	+ stringC4.sample();
 
       // play the sample on standard audio
       StdAudio.play(sample);
 
       // advance the simulation of each guitar string by one step
       stringA3.tic();
+      stringBb3.tic();
       stringB3.tic();
       stringC3.tic();
       stringD3.tic();
@@ -136,13 +145,12 @@ public class GuitarString {
 
     for (int i = 0; i < capacity; i++) rb.enqueue(2.0 * (Math.random() - 0.5));
 
-
     // for (int i = 0; i < capacity; i++)
     //    rb.enqueue(Math.sin((2.0 * Math.PI * i) / capacity));
 
     // fundamental sinusoidal + noise
     // for (int i = 0; i < capacity; i++)
-    //     rb.enqueue((0.5 - Math.random()) / 4 + Math.sin((2.0 * Math.PI * i) / capacity) / 2);
+    //     rb.enqueue((0.5 - Math.random()) / 4 + Math.sin((2.0 * Math.PI * i) / capacity));
 
     // superposition of a bunch of stuff
     // for (int i = 0; i < capacity; i++) {
@@ -172,7 +180,6 @@ public class GuitarString {
 
   // advance the simulation one time step
   private void tic() {
-    tics++;
     if (rb.isEmpty()) rb.enqueue(0);
     else rb.enqueue(0.996 * (rb.dequeue() + rb.peek()) / 2);
     //else rb.enqueue((rb.dequeue() + rb.peek()) / 2.0);

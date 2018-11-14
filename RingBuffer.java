@@ -1,5 +1,5 @@
 /**
- * A type of queue
+ * A type of bounded (i.e. finite capacity) queue
  */
 public class RingBuffer {
 

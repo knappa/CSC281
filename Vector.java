@@ -62,7 +62,7 @@ public interface Vector {
   /**
    * computes the dot product
    *
-   * @param other another <code>DenseVector</code> of the same dimension
+   * @param other another <code>Vector</code> of the same dimension
    * @return dot product of <code>this</code> and <code>other</code>
    */
   double dot(Vector other);
